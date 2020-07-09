@@ -4,7 +4,9 @@ import ReactDOM from "react-dom";
 const App = (props) => {
   return (
     <div>
-      <h1>Hello World</h1>
+      {/* <Header /> */}
+      {/* <SearchBar /> */}
+      {/* <SearchResults /> */}
     </div>
   );
 };
