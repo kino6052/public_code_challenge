@@ -1,23 +1,25 @@
-var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client/src');
-var DIST_DIR = path.join(__dirname, '/client/dist');
+var path = require("path");
+const { response } = require("express");
+var SRC_DIR = path.join(__dirname, "/client/src");
+var DIST_DIR = path.join(__dirname, "/client/dist");
 
 module.exports = {
-  entry: `${SRC_DIR}/index.jsx`,
+  entry: `${SRC_DIR}/index.tsx`,
   output: {
-    filename: 'bundle.js',
-    path: DIST_DIR
+    filename: "bundle.js",
+    path: DIST_DIR,
   },
-  module : {
-    loaders : [
+  module: {
+    rules: [
       {
-        test : /\.jsx?/,
-        include : SRC_DIR,
-        loader : 'babel-loader',      
-        query: {
-          presets: ['react', 'es2015']
-        }
-      }
-    ]
-  }
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    modules: [path.resolve(__dirname, "node_modules"), "node_modules"],
+    extensions: [".tsx", ".ts", ".js"],
+  },
 };
