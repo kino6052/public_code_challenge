@@ -40,7 +40,21 @@ const CardsWrapper = styled.div`
   }
 `;
 
-export const SearchResults = () => {
+interface IFarm {
+  id: string;
+  name: string;
+  state: string;
+  soil_type: string;
+  revenue: number;
+  fields: IField[];
+}
+
+interface IField {
+  crop: string;
+  size: number;
+}
+
+export const SearchResults: React.SFC<{ farms: IFarm[] }> = ({ farms }) => {
   return (
     <SearchResultsWrapper>
       <HeadingWrapper>
@@ -48,21 +62,23 @@ export const SearchResults = () => {
           Search Results
         </Typography>
       </HeadingWrapper>
-      <Typography variant="subtitle1">2 Results</Typography>
+      <Typography variant="subtitle1">{farms.length} Results</Typography>
       <CardsWrapper>
-        <Card classes={{ root: "card" }}>
-          <CardActionArea classes={{ root: "card-action-area" }}>
-            <CardMedia classes={{ root: "card-media" }} title="Card" />
-            <CardContent classes={{ root: "card-content" }}>
-              <Typography gutterBottom variant="h5" component="h2">
-                McDonald, WI
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                $140,800 in Revenue
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        {farms.map((farm) => (
+          <Card key={farm.id} classes={{ root: "card" }}>
+            <CardActionArea classes={{ root: "card-action-area" }}>
+              <CardMedia classes={{ root: "card-media" }} title="Card" />
+              <CardContent classes={{ root: "card-content" }}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {farm.name}, {farm.state}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  ${farm.revenue} in Revenue
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
       </CardsWrapper>
     </SearchResultsWrapper>
   );

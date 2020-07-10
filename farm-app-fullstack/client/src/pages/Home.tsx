@@ -8,7 +8,18 @@ export const HomePage = () => {
     <>
       <Header />
       <SearchBar />
-      <SearchResults />
+      <SearchResults
+        farms={[
+          {
+            id: "1",
+            fields: [],
+            name: "Farm",
+            revenue: 1000,
+            soil_type: "Regular Type",
+            state: "CO",
+          },
+        ]}
+      />
     </>
   );
 };
