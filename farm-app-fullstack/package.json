@@ -6,6 +6,7 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
+    "build": "webpack --config ./webpack.config.js",
     "start": "webpack && node server/index.js"
   },
   "author": "Kirill Novik",
@@ -25,7 +26,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "express": "^4.15.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   }
 }

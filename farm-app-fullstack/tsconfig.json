@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "lib": ["es6", "dom"],
-    "rootDir": "client/src",
+    "rootDir": "./client/src",
     "module": "commonjs",
     "target": "es5",
     "sourceMap": true,

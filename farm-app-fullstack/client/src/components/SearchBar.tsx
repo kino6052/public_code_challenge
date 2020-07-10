@@ -6,7 +6,7 @@ import {
   FormControl,
   InputAdornment,
 } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+// import { Search } from "@material-ui/icons";
 import styled from "styled-components";
 
 const SearchBarWrapper = styled.div`
@@ -29,9 +29,7 @@ export const SearchBar = () => {
           id="outlined-adornment-farm-name"
           endAdornment={
             <InputAdornment position="end">
-              <IconButton>
-                <Search />
-              </IconButton>
+              <IconButton>{/* <Search /> */}</IconButton>
             </InputAdornment>
           }
           labelWidth={90}
