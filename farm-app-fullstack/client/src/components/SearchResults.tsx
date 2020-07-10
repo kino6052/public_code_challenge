@@ -7,6 +7,7 @@ import {
   CardMedia,
 } from "@material-ui/core";
 import styled from "styled-components";
+import { IFarm } from "../services/AppService";
 
 const HeadingWrapper = styled.span`
   h2 {
@@ -39,20 +40,6 @@ const CardsWrapper = styled.div`
     }
   }
 `;
-
-interface IFarm {
-  id: string;
-  name: string;
-  state: string;
-  soil_type: string;
-  revenue: number;
-  fields: IField[];
-}
-
-interface IField {
-  crop: string;
-  size: number;
-}
 
 export const SearchResults: React.SFC<{ farms: IFarm[] }> = ({ farms }) => {
   return (

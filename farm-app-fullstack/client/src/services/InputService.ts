@@ -4,16 +4,23 @@ import { InitSubject } from "./InitService";
 import { DocumentSubject, EType } from "./DocumentService";
 import { generateUniqueId } from "../utils/utils";
 
+// Default Values
+export const DEFAULT_FARM_NAME = "";
+export const DEFAULT_MIN_REVENUE = 0;
+export const DEFAULT_MAX_REVENUE = Number.POSITIVE_INFINITY;
+
 // Unique Ids of the Inputs
 export const FARM_NAME_ID = generateUniqueId();
 export const MIN_REVENUE_ID = generateUniqueId();
 export const MAX_REVENUE_ID = generateUniqueId();
 
 // Stateful Stores
-export const FarmNameSubject = new BehaviorSubject<string>("");
-export const MinRevenueSubject = new BehaviorSubject<number>(0);
+export const FarmNameSubject = new BehaviorSubject<string>(DEFAULT_FARM_NAME);
+export const MinRevenueSubject = new BehaviorSubject<number>(
+  DEFAULT_MIN_REVENUE
+);
 export const MaxRevenueSubject = new BehaviorSubject<number>(
-  Number.POSITIVE_INFINITY
+  DEFAULT_MAX_REVENUE
 );
 
 export class InputService {
@@ -52,6 +59,7 @@ export class InputService {
   );
 }
 
+// Logic That Will Update Stores on Change to Inputs
 InitSubject.subscribe(() => {
   InputService.FarmNameSubject.subscribe((name) => {
     FarmNameSubject.next(name);
