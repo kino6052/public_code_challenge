@@ -1,11 +1,10 @@
 import React from "react";
 import {
-  IconButton,
-  InputLabel,
-  OutlinedInput,
-  FormControl,
-  InputAdornment,
-} from "@material-ui/core";
+  FARM_NAME_ID,
+  MIN_REVENUE_ID,
+  MAX_REVENUE_ID,
+} from "../services/InputService";
+import { SearchInput, Input } from "./Input";
 // import { Search } from "@material-ui/icons";
 import styled from "styled-components";
 
@@ -21,40 +20,9 @@ const SearchBarWrapper = styled.div`
 export const SearchBar = () => {
   return (
     <SearchBarWrapper>
-      <FormControl classes={{ root: "form-control" }} variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-farm-name">
-          Farm Name
-        </InputLabel>
-        <OutlinedInput
-          id="outlined-adornment-farm-name"
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton>{/* <Search /> */}</IconButton>
-            </InputAdornment>
-          }
-          labelWidth={90}
-        />
-      </FormControl>
-      <FormControl classes={{ root: "form-control" }} variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-min">
-          Minimum Revenue
-        </InputLabel>
-        <OutlinedInput
-          type="number"
-          id="outlined-adornment-min"
-          labelWidth={150}
-        />
-      </FormControl>
-      <FormControl classes={{ root: "form-control" }} variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-min">
-          Maximum Revenue
-        </InputLabel>
-        <OutlinedInput
-          type="number"
-          id="outlined-adornment-min"
-          labelWidth={150}
-        />
-      </FormControl>
+      <SearchInput label="Farm Name" id={FARM_NAME_ID} />
+      <Input label="Min Revenue" type="number" id={MIN_REVENUE_ID} />
+      <Input label="Max Revenue" type="number" id={MAX_REVENUE_ID} />
     </SearchBarWrapper>
   );
 };
