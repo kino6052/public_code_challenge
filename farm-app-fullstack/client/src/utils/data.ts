@@ -104,10 +104,11 @@ export const generateDummyData = () =>
     // @ts-ignore
     const farm = DUMMY_DATA[k];
     farm.id = generateUniqueId();
-    farm.fields = Object.keys(farm.fields).map((k) => {
+    farm.fields = Object.keys(farm.fields).map((f) => {
       return {
-        ...farm.fields[k],
-        name: k,
+        ...farm.fields[f],
+        size: farm.fields[f]["size (acres)"],
+        name: f,
       };
     });
     return farm;

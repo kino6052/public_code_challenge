@@ -7,7 +7,7 @@ import { IAppData } from "../services/AppService";
 export const HomePage: React.SFC<IAppData> = ({ farms }) => {
   return (
     <>
-      <Header />
+      <Header hasBackButton={false} />
       <SearchBar />
       <SearchResults farms={farms} />
     </>

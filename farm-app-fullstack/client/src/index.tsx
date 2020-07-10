@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div>
       {RouterService.isHomePageRoute(route) && <HomePage {...state} />}
-      {RouterService.isFarmPageRoute(route) && <FarmPage />}
+      {RouterService.isFarmPageRoute(route) && <FarmPage {...state} />}
     </div>
   );
 };

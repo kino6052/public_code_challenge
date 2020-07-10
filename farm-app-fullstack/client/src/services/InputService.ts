@@ -16,6 +16,7 @@ export const DEFAULT_MAX_REVENUE = Number.POSITIVE_INFINITY;
 export const FARM_NAME_ID = generateUniqueId();
 export const MIN_REVENUE_ID = generateUniqueId();
 export const MAX_REVENUE_ID = generateUniqueId();
+export const BACK_BUTTON_ID = generateUniqueId();
 
 // Stateful Stores
 export const FarmNameSubject = new BehaviorSubject<string>(DEFAULT_FARM_NAME);
@@ -71,6 +72,13 @@ export class InputService {
       return id as string;
     })
   );
+
+  static BackButtonSubject = DocumentSubject.pipe(
+    filter(({ id, type }) => {
+      if (id === BACK_BUTTON_ID && type === EType.Click) return true;
+      return false;
+    })
+  );
 }
 
 // Logic That Will Update Stores on Change to Inputs
@@ -86,5 +94,8 @@ InitSubject.subscribe(() => {
   });
   InputService.FarmCardSubject.subscribe((id) => {
     RouterService.goToFarmPage(id);
+  });
+  InputService.BackButtonSubject.subscribe(() => {
+    RouterService.goToHomePage();
   });
 });

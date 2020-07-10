@@ -1,5 +1,6 @@
 import { Subject } from "rxjs";
 import { InitSubject } from "./InitService";
+import { BACK_BUTTON_ID } from "./InputService";
 
 export enum EType {
   Click,
@@ -31,6 +32,13 @@ InitSubject.subscribe(() => {
     const id = (e as CustomEvent).detail.id;
     DocumentSubject.next({
       id,
+      type: EType.Click,
+    });
+  });
+  document.addEventListener("back", (e) => {
+    if (!e || !e.target) return;
+    DocumentSubject.next({
+      id: BACK_BUTTON_ID,
       type: EType.Click,
     });
   });

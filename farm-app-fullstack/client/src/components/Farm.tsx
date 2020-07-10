@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 
 import styled from "styled-components";
+import { IFarm } from "../services/AppService";
 
 const HeadingWrapper = styled.span`
   h2 {
@@ -24,19 +25,25 @@ const FarmWrapper = styled.div`
   width: 100%;
 `;
 
-export const Farm = () => {
+export const Farm: React.SFC<IFarm> = ({
+  name,
+  state,
+  revenue,
+  fields,
+  soil_type,
+}) => {
   return (
     <FarmWrapper>
       <HeadingWrapper>
         <Typography variant="h1" component="h2">
-          McDonald, WI
+          {name}, {state}
         </Typography>
       </HeadingWrapper>
       <Typography variant="subtitle1">
-        <span>Revenue:</span> $119,000
+        <span>Revenue:</span> ${revenue}
       </Typography>
       <Typography variant="subtitle1">
-        <span>Soil Type:</span> San Joaquin Series
+        <span>Soil Type:</span> {soil_type}
       </Typography>
       <div>
         <Table aria-label="customized table">
@@ -48,13 +55,15 @@ export const Farm = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow key={"rpw"}>
-              <TableCell component="th" scope="row">
-                {"Row"}
-              </TableCell>
-              <TableCell align="right">{"Callories"}</TableCell>
-              <TableCell align="right">{"Fat"}</TableCell>
-            </TableRow>
+            {fields.map(({ name, size, crop }) => (
+              <TableRow key={name}>
+                <TableCell component="th" scope="row">
+                  {name}
+                </TableCell>
+                <TableCell align="right">{crop}</TableCell>
+                <TableCell align="right">{size}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>
