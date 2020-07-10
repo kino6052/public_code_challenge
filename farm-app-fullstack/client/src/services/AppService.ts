@@ -46,11 +46,18 @@ export const AppServiceSubject = new BehaviorSubject<IAppData>(
 export class AppService {
   static filterFarms = (
     data: IFarm[],
-    name?: string,
-    minRevenue?: number,
-    maxRevenue?: number
+    name: string = DEFAULT_FARM_NAME,
+    minRevenue: number = DEFAULT_MIN_REVENUE,
+    maxRevenue: number = DEFAULT_MAX_REVENUE
   ) => {
-    return [];
+    const _name = name.toLowerCase() || "";
+    return data.filter((farm) => {
+      const farmName = farm.name.toLowerCase();
+      const isNameMatch = farmName.includes(_name);
+      const isRevenueMatch =
+        farm.revenue >= minRevenue && farm.revenue <= maxRevenue;
+      return isNameMatch && isRevenueMatch;
+    });
   };
 }
 
@@ -71,9 +78,14 @@ InitSubject.subscribe(() => {
     state.maxRevenue = revenue;
     AppServiceSubject.next(state);
   });
-  merge(
-    FarmNameSubject,
-    MinRevenueSubject,
-    MaxRevenueSubject
-  ).subscribe(() => {});
+  merge(FarmNameSubject, MinRevenueSubject, MaxRevenueSubject).subscribe(() => {
+    const state = { ...AppServiceSubject.getValue() };
+    state.farms = AppService.filterFarms(
+      state.farms,
+      state.farmName,
+      state.minRevenue,
+      state.maxRevenue
+    );
+    AppServiceSubject.next(state);
+  });
 });

@@ -110,4 +110,5 @@ export const generateDummyData = () =>
         name: k,
       };
     });
+    return farm;
   });
