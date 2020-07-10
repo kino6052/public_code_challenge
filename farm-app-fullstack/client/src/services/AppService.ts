@@ -12,6 +12,7 @@ import { InitSubject } from "./InitService";
 import { DataService } from "./DataService";
 import { distinctUntilChanged, debounceTime } from "rxjs/operators";
 import { DEBOUNCE } from "../utils/constants";
+import { DEFAULT_ROUTE, RouterSubject } from "./RouterService";
 
 export interface IFarm {
   id: string;
@@ -29,6 +30,7 @@ export interface IField {
 }
 
 export interface IAppData {
+  route: string;
   farmName: string;
   minRevenue: number;
   maxRevenue: number;
@@ -36,6 +38,7 @@ export interface IAppData {
 }
 
 const DEFAULT_APP_DATA: IAppData = {
+  route: DEFAULT_ROUTE,
   farmName: DEFAULT_FARM_NAME,
   minRevenue: DEFAULT_MIN_REVENUE,
   maxRevenue: DEFAULT_MAX_REVENUE,
@@ -62,27 +65,27 @@ export class AppService {
       return isNameMatch && isRevenueMatch;
     });
   };
+  static updateAppState = () => {
+    const route = RouterSubject.getValue();
+    const farmName = FarmNameSubject.getValue();
+    const minRevenue = MinRevenueSubject.getValue();
+    const maxRevenue = MaxRevenueSubject.getValue();
+    const farmData = DataService.getFarmData();
+    const farms = AppService.filterFarms(
+      farmData,
+      farmName,
+      minRevenue,
+      maxRevenue
+    );
+    const newState = { farmName, minRevenue, maxRevenue, farms, route };
+    AppServiceSubject.next(newState);
+  };
 }
 
 // Subscribe to Observables after Initialization
 InitSubject.subscribe(() => {
   // AppServiceSubject.subscribe(console.warn);
-  merge(FarmNameSubject, MinRevenueSubject, MaxRevenueSubject)
+  merge(FarmNameSubject, MinRevenueSubject, MaxRevenueSubject, RouterSubject)
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE))
-    .subscribe(() => {
-      const state = { ...AppServiceSubject.getValue() };
-      const farmName = FarmNameSubject.getValue();
-      const minRevenue = MinRevenueSubject.getValue();
-      const maxRevenue = MaxRevenueSubject.getValue();
-      const farms = DataService.getFarmData();
-      state.farms = AppService.filterFarms(
-        farms,
-        farmName,
-        minRevenue,
-        maxRevenue
-      );
-      const newState = { farmName, minRevenue, maxRevenue, farms };
-      console.warn(newState);
-      AppServiceSubject.next(newState);
-    });
+    .subscribe(() => AppService.updateAppState());
 });

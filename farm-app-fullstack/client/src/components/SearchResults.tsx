@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import styled from "styled-components";
 import { IFarm } from "../services/AppService";
+import { dispatchCustomEvent } from "../utils/utils";
 
 const HeadingWrapper = styled.span`
   h2 {
@@ -52,7 +53,12 @@ export const SearchResults: React.SFC<{ farms: IFarm[] }> = ({ farms }) => {
       <Typography variant="subtitle1">{farms.length} Results</Typography>
       <CardsWrapper>
         {farms.map((farm) => (
-          <Card key={farm.id} classes={{ root: "card" }}>
+          <Card
+            key={farm.id}
+            id={farm.id}
+            classes={{ root: "card" }}
+            onClick={() => dispatchCustomEvent("card", { id: farm.id })}
+          >
             <CardActionArea classes={{ root: "card-action-area" }}>
               <CardMedia classes={{ root: "card-media" }} title="Card" />
               <CardContent classes={{ root: "card-content" }}>

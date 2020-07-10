@@ -26,7 +26,15 @@ InitSubject.subscribe(() => {
       type: EType.Click,
     });
   });
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("card", (e) => {
+    if (!e || !e.target) return;
+    const id = (e as CustomEvent).detail.id;
+    DocumentSubject.next({
+      id,
+      type: EType.Click,
+    });
+  });
+  document.addEventListener("keyup", (e) => {
     if (!e || !e.target) return;
     const id = (e.target as HTMLElement).id;
     const value = (e.target as HTMLInputElement).value;

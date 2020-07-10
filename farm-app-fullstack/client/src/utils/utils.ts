@@ -28,3 +28,7 @@ export const setPartial = <T>(
   const prev = subject.getValue();
   subject.next({ ...prev, ...partial });
 };
+
+export const dispatchCustomEvent = <T>(name: string, data: T) => {
+  document.dispatchEvent(new CustomEvent(name, { detail: data }));
+};

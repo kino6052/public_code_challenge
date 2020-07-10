@@ -3,6 +3,9 @@ import { filter, map, retryWhen } from "rxjs/operators";
 import { InitSubject } from "./InitService";
 import { DocumentSubject, EType } from "./DocumentService";
 import { generateUniqueId } from "../utils/utils";
+import { DataService } from "./DataService";
+import { IFarm } from "./AppService";
+import { RouterService } from "./RouterService";
 
 // Default Values
 export const DEFAULT_FARM_NAME = "";
@@ -26,8 +29,8 @@ export const MaxRevenueSubject = new BehaviorSubject<number>(
 export class InputService {
   static FarmNameSubject = DocumentSubject.pipe(
     filter(({ id, type }) => {
-      if (id !== FARM_NAME_ID && type !== EType.Keydown) return false;
-      return true;
+      if (id === FARM_NAME_ID && type === EType.Keydown) return true;
+      return false;
     }),
     map(({ data }) => {
       return data as string;
@@ -36,8 +39,8 @@ export class InputService {
 
   static MinRevenueSubject = DocumentSubject.pipe(
     filter(({ id, type }) => {
-      if (id !== MIN_REVENUE_ID && type !== EType.Keydown) return false;
-      return true;
+      if (id === MIN_REVENUE_ID && type === EType.Keydown) return true;
+      return false;
     }),
     map(({ data }) => {
       const num = Number(data);
@@ -48,13 +51,24 @@ export class InputService {
 
   static MaxRevenueSubject = DocumentSubject.pipe(
     filter(({ id, type }) => {
-      if (id !== MAX_REVENUE_ID && type !== EType.Keydown) return false;
-      return true;
+      if (id === MAX_REVENUE_ID && type === EType.Keydown) return true;
+      return false;
     }),
     map(({ data }) => {
       const num = Number(data);
       if (Number.isNaN(num) || num <= 0) return DEFAULT_MAX_REVENUE;
       return num;
+    })
+  );
+
+  static FarmCardSubject = DocumentSubject.pipe(
+    filter(({ id, type }) => {
+      const ids = DataService.getFarmData().map((d: IFarm) => d.id);
+      if (ids.includes(id) && type === EType.Click) return true;
+      return false;
+    }),
+    map(({ id }) => {
+      return id as string;
     })
   );
 }
@@ -69,5 +83,8 @@ InitSubject.subscribe(() => {
   });
   InputService.MaxRevenueSubject.subscribe((revenue) => {
     MaxRevenueSubject.next(revenue);
+  });
+  InputService.FarmCardSubject.subscribe((id) => {
+    RouterService.goToFarmPage(id);
   });
 });
