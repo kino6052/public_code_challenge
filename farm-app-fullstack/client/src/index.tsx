@@ -1,12 +1,11 @@
-import React from "react";
+import * as React from "react";
 import ReactDOM from "react-dom";
+import { HomePage } from "./pages/Home";
 
 const App = () => {
   return (
     <div>
-      {/* <Header /> */}
-      {/* <SearchBar /> */}
-      {/* <SearchResults> */}
+      <HomePage />
     </div>
   );
 };
