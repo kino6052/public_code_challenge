@@ -1,5 +1,5 @@
 import { BehaviorSubject, merge } from "rxjs";
-import { generateDummyData } from "../utils/data";
+import { parseData } from "../utils/data";
 import {
   DEFAULT_FARM_NAME,
   DEFAULT_MIN_REVENUE,
@@ -9,7 +9,7 @@ import {
   MaxRevenueSubject,
 } from "./InputService";
 import { InitSubject } from "./InitService";
-import { DataService } from "./DataService";
+import { DataService, DataSubject } from "./DataService";
 import { distinctUntilChanged, debounceTime } from "rxjs/operators";
 import { DEBOUNCE } from "../utils/constants";
 import { DEFAULT_ROUTE, RouterSubject } from "./RouterService";
@@ -42,7 +42,7 @@ const DEFAULT_APP_DATA: IAppData = {
   farmName: DEFAULT_FARM_NAME,
   minRevenue: DEFAULT_MIN_REVENUE,
   maxRevenue: DEFAULT_MAX_REVENUE,
-  farms: (generateDummyData() as unknown) as IFarm[],
+  farms: [] as IFarm[],
 };
 
 export const AppServiceSubject = new BehaviorSubject<IAppData>(
@@ -85,7 +85,13 @@ export class AppService {
 // Subscribe to Observables after Initialization
 InitSubject.subscribe(() => {
   // AppServiceSubject.subscribe(console.warn);
-  merge(FarmNameSubject, MinRevenueSubject, MaxRevenueSubject, RouterSubject)
+  merge(
+    FarmNameSubject,
+    MinRevenueSubject,
+    MaxRevenueSubject,
+    RouterSubject,
+    DataSubject
+  )
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE))
     .subscribe(() => AppService.updateAppState());
 });

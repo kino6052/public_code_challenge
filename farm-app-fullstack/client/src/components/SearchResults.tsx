@@ -21,23 +21,29 @@ const SearchResultsWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  margin: 8px;
 `;
 
 const CardsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   .card {
-    width: calc(100% / 3);
-    .card-media {
-      width: 100%;
-      height: 150px;
-      background: #77777777;
-    }
-    .card-content {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
+    margin: 8px;
+    width: 32%;
+    min-width: 300px;
+    .card-action-area {
+      .card-media {
+        width: 100%;
+        height: 150px;
+        background: #77777777;
+      }
+      .card-content {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
     }
   }
 `;

@@ -4,7 +4,6 @@ import {
   Table,
   TableHead,
   TableRow,
-  Paper,
   TableBody,
   TableCell,
 } from "@material-ui/core";
@@ -23,6 +22,13 @@ const FarmWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  margin: 8px;
+`;
+
+const Spacer = styled.div<{ height: number }>`
+  display: flex;
+  width: 100%;
+  height: ${({ height }) => height}px;
 `;
 
 export const Farm: React.SFC<IFarm> = ({
@@ -34,6 +40,7 @@ export const Farm: React.SFC<IFarm> = ({
 }) => {
   return (
     <FarmWrapper>
+      <Spacer height={16} />
       <HeadingWrapper>
         <Typography variant="h1" component="h2">
           {name}, {state}
@@ -45,13 +52,20 @@ export const Farm: React.SFC<IFarm> = ({
       <Typography variant="subtitle1">
         <span>Soil Type:</span> {soil_type}
       </Typography>
+      <Spacer height={24} />
       <div>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell>Field Name</TableCell>
-              <TableCell align="right">Crop</TableCell>
-              <TableCell align="right">Size (acres)</TableCell>
+              <TableCell>
+                <b>Field Name</b>
+              </TableCell>
+              <TableCell align="right">
+                <b>Crop</b>
+              </TableCell>
+              <TableCell align="right">
+                <b>Size (acres)</b>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

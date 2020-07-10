@@ -13,7 +13,7 @@ export const DocumentSubject = new Subject<{
   data?: {};
 }>();
 
-export class InputService {}
+export class DocumentService {}
 
 // Initialization Logic
 // This allows for better decoupling between services

@@ -99,8 +99,9 @@ export const DUMMY_DATA = {
   },
 };
 
-export const generateDummyData = () =>
-  Object.keys(DUMMY_DATA).map((k) => {
+// @ts-ignore
+export const parseData = (data) =>
+  Object.keys(data).map((k) => {
     // @ts-ignore
     const farm = DUMMY_DATA[k];
     farm.id = generateUniqueId();
