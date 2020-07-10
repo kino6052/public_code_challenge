@@ -9,6 +9,9 @@ import {
   MaxRevenueSubject,
 } from "./InputService";
 import { InitSubject } from "./InitService";
+import { DataService } from "./DataService";
+import { distinctUntilChanged, debounceTime } from "rxjs/operators";
+import { DEBOUNCE } from "../utils/constants";
 
 export interface IFarm {
   id: string;
@@ -63,29 +66,23 @@ export class AppService {
 
 // Subscribe to Observables after Initialization
 InitSubject.subscribe(() => {
-  FarmNameSubject.subscribe((name) => {
-    const state = { ...AppServiceSubject.getValue() };
-    state.farmName = name;
-    AppServiceSubject.next(state);
-  });
-  MinRevenueSubject.subscribe((revenue) => {
-    const state = { ...AppServiceSubject.getValue() };
-    state.minRevenue = revenue;
-    AppServiceSubject.next(state);
-  });
-  MaxRevenueSubject.subscribe((revenue) => {
-    const state = { ...AppServiceSubject.getValue() };
-    state.maxRevenue = revenue;
-    AppServiceSubject.next(state);
-  });
-  merge(FarmNameSubject, MinRevenueSubject, MaxRevenueSubject).subscribe(() => {
-    const state = { ...AppServiceSubject.getValue() };
-    state.farms = AppService.filterFarms(
-      state.farms,
-      state.farmName,
-      state.minRevenue,
-      state.maxRevenue
-    );
-    AppServiceSubject.next(state);
-  });
+  // AppServiceSubject.subscribe(console.warn);
+  merge(FarmNameSubject, MinRevenueSubject, MaxRevenueSubject)
+    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE))
+    .subscribe(() => {
+      const state = { ...AppServiceSubject.getValue() };
+      const farmName = FarmNameSubject.getValue();
+      const minRevenue = MinRevenueSubject.getValue();
+      const maxRevenue = MaxRevenueSubject.getValue();
+      const farms = DataService.getFarmData();
+      state.farms = AppService.filterFarms(
+        farms,
+        farmName,
+        minRevenue,
+        maxRevenue
+      );
+      const newState = { farmName, minRevenue, maxRevenue, farms };
+      console.warn(newState);
+      AppServiceSubject.next(newState);
+    });
 });

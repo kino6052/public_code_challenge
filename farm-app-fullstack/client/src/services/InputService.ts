@@ -53,7 +53,7 @@ export class InputService {
     }),
     map(({ data }) => {
       const num = Number(data);
-      if (Number.isNaN(num) || num < 0) return 0;
+      if (Number.isNaN(num) || num <= 0) return DEFAULT_MAX_REVENUE;
       return num;
     })
   );

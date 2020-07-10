@@ -9,5 +9,7 @@ describe("AppService Tests", () => {
     expect(result.length).toBe(1);
     result = AppService.filterFarms(data, "", 100000, 200000);
     expect(result.length).toBe(4);
+    result = AppService.filterFarms(data, "a");
+    expect(result.length).toBe(6);
   });
 });
