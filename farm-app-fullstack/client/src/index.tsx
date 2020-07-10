@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const App = (props) => {
+const App = () => {
   return (
     <div>
       {/* <Header /> */}
       {/* <SearchBar /> */}
-      {/* <SearchResults /> */}
+      {/* <SearchResults> */}
     </div>
   );
 };

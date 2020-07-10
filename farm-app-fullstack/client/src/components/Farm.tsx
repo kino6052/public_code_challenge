@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   Typography,
-  TableContainer,
   Table,
   TableHead,
   TableRow,
@@ -25,7 +24,7 @@ const FarmWrapper = styled.div`
   width: 100%;
 `;
 
-const Farm = () => {
+export const Farm = () => {
   return (
     <FarmWrapper>
       <HeadingWrapper>
@@ -39,7 +38,7 @@ const Farm = () => {
       <Typography variant="subtitle1">
         <span>Soil Type:</span> San Joaquin Series
       </Typography>
-      <TableContainer component={Paper}>
+      <div>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -58,7 +57,7 @@ const Farm = () => {
             </TableRow>
           </TableBody>
         </Table>
-      </TableContainer>
+      </div>
     </FarmWrapper>
   );
 };

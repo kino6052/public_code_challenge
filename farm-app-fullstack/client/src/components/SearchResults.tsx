@@ -14,7 +14,7 @@ const HeadingWrapper = styled.span`
   }
 `;
 
-const SearchResultWrapper = styled.div`
+const SearchResultsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -40,9 +40,9 @@ const CardsWrapper = styled.div`
   }
 `;
 
-const SearchResult = () => {
+export const SearchResults = () => {
   return (
-    <SearchResultWrapper>
+    <SearchResultsWrapper>
       <HeadingWrapper>
         <Typography variant="h1" component="h2">
           Search Results
@@ -64,6 +64,6 @@ const SearchResult = () => {
           </CardActionArea>
         </Card>
       </CardsWrapper>
-    </SearchResultWrapper>
+    </SearchResultsWrapper>
   );
 };
